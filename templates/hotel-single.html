@@ -1,0 +1,654 @@
+{% extends 'base.html' %} {% load jalali_tags %}
+{% load static %}
+{% load customtag %}
+<!-- informations starts -->
+<!-- Inner Banner -->
+{% block content %}
+
+    <div class="inner-banner">
+        <div class="container">
+            <div class="inner-title text-center">
+                <h3>{{ hotel.name }}</h3>
+                <ul id="breadcrumbs" class="breadcrumbs">
+                    <li class="home"><a class="bread-link bread-home" href="{% url 'website:home' %}" title="صفحه اصلی">صفحه
+                        اصلی</a></li>
+                    <li class="separator separator-home"><i class="bx bx-chevrons-left"></i></li>
+                    <li class="item-cat item-custom-post-type-hotel"><a class="bread-cat bread-custom-post-type-hotel"
+                                                                        href="{% url 'hotels:home' %}" title="هتل ها">هتل
+                        ها</a></li>
+                    <li class="separator"><i class="bx bx-chevrons-left"></i></li>
+                    <li class="item-current item-15366"><strong class="bread-current bread-15366"
+                                                                title="{{ hotel.name }}">{{ hotel.name }}</strong></li>
+                </ul>
+                <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "name": "Breadcrumb",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "item": {
+        "@type": "WebPage",
+        "@id": "{{ request.scheme }}://{{ request.get_host }}{% url 'website:home' %}",
+        "name": "صفحه اصلی"
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "item": {
+        "@type": "WebPage",
+        "@id": "{{ request.scheme }}://{{ request.get_host }}{% url 'hotels:home' %}",
+        "name": "هتل ها"
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "item": {
+        "@type": "WebPage",
+        "@id": "{{ request.scheme }}://{{ request.get_host }}{% url 'hotels:single' hotel.id %}",
+        "name": "{{ hotel.name|escapejs }}"
+      }
+    }
+  ]
+}
+</script>
+            </div>
+        </div>
+        <div class="inner-shape">
+            <img src="{% static 'images/shape/inner-shape.png' %}" alt="Images">
+        </div>
+    </div>
+    <!-- Inner Banner End -->
+
+
+    <!-- Blog Details Area -->
+    <div class="blog-details-area pt-100 pb-70">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div id="hotel-gllaery">
+
+                        <div class="container mt-4">
+                            <a href="#" class="btn btn-primary">مشاهده تور های {{ hotel.name }}</a>
+                        </div>
+
+                        <ul class="list-unstyled">
+
+
+                            <li class="num1">
+
+                                <div class="box-item">
+                                    <img src="{{ hotel.picture1.url }}" alt="" title="">
+                                    <a class="elem"
+                                       href="{{ hotel.picture1.url }}"
+                                       data-lcl-thumb="{{ hotel.picture1.url }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                             class="icon icon-tabler icon-tabler-search"
+                                             width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5"
+                                             stroke="currentColor" fill="none" stroke-linecap="round"
+                                             stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
+                                            <path d="M21 21l-6 -6"></path>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="num2">
+
+                                <div class="box-item">
+                                    <img src="{{ hotel.picture2.url }}" alt="" title="">
+                                    <a class="elem"
+                                       href="{{ hotel.picture2.url }}"
+                                       data-lcl-thumb="{{ hotel.picture2.url }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                             class="icon icon-tabler icon-tabler-search"
+                                             width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5"
+                                             stroke="currentColor" fill="none" stroke-linecap="round"
+                                             stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
+                                            <path d="M21 21l-6 -6"></path>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="num3">
+
+                                <div class="box-item">
+                                    <img src="{{ hotel.picture3.url }}" alt="" title="">
+                                    <a class="elem"
+                                       href="{{ hotel.picture3.url }}"
+                                       data-lcl-thumb="{{ hotel.picture3.url }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                             class="icon icon-tabler icon-tabler-search"
+                                             width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5"
+                                             stroke="currentColor" fill="none" stroke-linecap="round"
+                                             stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
+                                            <path d="M21 21l-6 -6"></path>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="num4">
+
+                                <div class="box-item">
+                                    <img src="{{ hotel.picture4.url }}" alt="" title="">
+                                    <a class="elem"
+                                       href="{{ hotel.picture4.url }}"
+                                       data-lcl-thumb="{{ hotel.picture4.url }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                             class="icon icon-tabler icon-tabler-search"
+                                             width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5"
+                                             stroke="currentColor" fill="none" stroke-linecap="round"
+                                             stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
+                                            <path d="M21 21l-6 -6"></path>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="num5">
+
+                                <div class="box-item">
+                                    <img src="{{ hotel.picture5.url }}" alt="" title="">
+                                    <a class="elem"
+                                       href="{{ hotel.picture5.url }}"
+                                       data-lcl-thumb="{{ hotel.picture5.url }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                             class="icon icon-tabler icon-tabler-search"
+                                             width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5"
+                                             stroke="currentColor" fill="none" stroke-linecap="round"
+                                             stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
+                                            <path d="M21 21l-6 -6"></path>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="num6">
+
+                                <div class="box-item">
+                                    <img src="{{ hotel.picture6.url }}" alt="" title="">
+                                    <a class="elem"
+                                       href="{{ hotel.picture6.url }}"
+                                       data-lcl-thumb="{{ hotel.picture6.url }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                             class="icon icon-tabler icon-tabler-search"
+                                             width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5"
+                                             stroke="currentColor" fill="none" stroke-linecap="round"
+                                             stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
+                                            <path d="M21 21l-6 -6"></path>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </li>
+                            <a class="elem"
+                               href="{{ hotel.picture7.url }}"
+                               data-lcl-thumb="{{ hotel.picture7.url }}">
+                                مشاهده همه
+                                <span class="icon">
+                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                     class="icon icon-tabler icon-tabler-arrows-maximize"
+                                                                     width="24" height="24" viewBox="0 0 24 24"
+                                                                     stroke-width="1.5" stroke="currentColor"
+                                                                     fill="none" stroke-linecap="round"
+                                                                     stroke-linejoin="round">
+                                                                  <path stroke="none" d="M0 0h24v24H0z"
+                                                                        fill="none"></path>
+                                                                  <path d="M16 4l4 0l0 4"></path>
+                                                                  <path d="M14 10l6 -6"></path>
+                                                                  <path d="M8 20l-4 0l0 -4"></path>
+                                                                  <path d="M4 20l6 -6"></path>
+                                                                  <path d="M16 20l4 0l0 -4"></path>
+                                                                  <path d="M14 14l6 6"></path>
+                                                                  <path d="M8 4l-4 0l0 4"></path>
+                                                                  <path d="M4 4l6 6"></path>
+                                                                </svg>
+                                                            </span>
+                            </a>
+
+
+                        </ul>
+
+                    </div>
+                    <div class="shade" id="tour-ex">
+                        <div class="text">
+                            <h2 class="sec-title">{{ hotel.name }}</h2>
+                            <div class="content-text">
+                                {{ hotel.content|safe }}
+
+                                <figure class="wp-block-image size-full"><img fetchpriority="high" decoding="async"
+                                                                              width="799" height="216"
+                                                                              src="{{ hotel.service }}"
+                                                                              alt="" class="wp-image-15367"
+                                                                              srcset="{{ hotel.service.url }}, {{ hotel.service_low.url }}, {{ hotel.services_medium.url }}"
+                                                                              sizes="(max-width: 799px) 100vw, 799px">
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="shade">
+                        <h3 class="sec-title">امکانات هتل</h3>
+                        <div class="row">
+                            {% for service in services %}
+                                <div class="col-lg-6">
+                                    <div>
+                                        <div class="ifo-box d-flex flex-wrap align-items-center">
+                                            <div class="tour-name">
+                                                <i class="me-2">
+                                                    <span></span>
+                                                </i>
+                                            </div>
+                                            <div class="tour-value">{{ service.name }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="tour-list-row pt-4">
+                        <div id="hotel-tours" class="cric-title">
+                            <h3>
+                                تورهای هتل {{ hotel.name }} :
+
+                            </h3>
+                        </div>
+
+
+                        <table class="tour-list">
+                            <thead>
+                            <tr>
+                                <th>عنوان تور</th>
+                                <th>اقامت</th>
+                                <th>تاریخ رفت</th>
+                                <th>به روز رسانی</th>
+                                <th>قیمت</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for tour in hotel.tourss.all %}
+                                <tr>
+                                    <td class="has_podcast">
+                                        <h3>
+
+                                            <a href="{% url 'tour:tour' tour.id %}">
+                                                <span class="icon-click"></span>
+                                                {{ tour.name }}</a>
+                                        </h3>
+                                    </td>
+                                    <td>{{ tour.duration }} شب</td>
+                                    <td>{{ tour.start_date|to_jalali:'%Y/%m/%d' }}</td>
+                                    <td class="airline">
+                                        {{ tour.last_update|to_jalali:'%Y/%m/%d' }}
+                                    </td>
+                                    <td class="package-price ">
+                                        <label>از</label>
+                                        {{ tour.price }}<label>تومان</label>
+
+                                        <a href="tel:+982144846267" class="call d-flex align-items-center">
+                                            <span class="label">رزرو تلفنی تور</span>
+                                            <span class="phone-number ms-auto">{{ contact_us.phone_number }}</span>
+                                            <span class="icon">
+												<svg xmlns="http://www.w3.org/2000/svg"
+                                                     class="icon icon-tabler icon-tabler-phone-call" width="20"
+                                                     height="20" viewBox="0 0 24 24" stroke-width="1.5"
+                                                     stroke="currentColor" fill="none" stroke-linecap="round"
+                                                     stroke-linejoin="round">
+												  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+												  <path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"></path>
+												  <path d="M15 7a2 2 0 0 1 2 2"></path>
+												  <path d="M15 3a6 6 0 0 1 6 6"></path>
+												</svg>
+											</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+
+
+                            </tbody>
+                        </table>
+
+
+                    </div>
+
+                    <div class="blog-article">
+                        <div id="comments">
+
+                            {% if hotel.comments %}
+                                <div class="comments-wrap">
+
+
+                                    <!-- End Comment -->
+                                    <div class="comment-title">
+                                        <h3 class="title">نظر </h3>
+                                    </div>
+                                    {% if comments %}
+                                        <ul class="comment-list">
+                                            {% for comment in comments %}
+                                                <li class="comment even thread-even depth-1" id="comment-496">
+                                                    <img src="{% static 'images/avatar.jpg' %}"
+                                                         alt=""
+                                                         class="img-circle" width="54" height="54">
+
+                                                    <h3>{{ comment.name }}</h3>
+                                                    <span>{{ comment.time|to_jalali:'%Y/%m/%d--%H:%M:%S' }}</span>
+                                                    <p>{{ comment.text }}</p>
+                                                    <a rel="nofollow" class="comment-reply-link"
+                                                       href="#comment-{{ comment.id }}"
+                                                       data-commentid="{{ comment.id }}" data-postid="15682"
+                                                       data-belowelement="{{ comment.id }}"
+                                                       data-respondelement="respond">پاسخ</a>
+
+                                                </li>
+                                                <div id="respond" class="comment-respond">
+                                                    <h3 class="title">دیدگاه شما در مورد این مطلب <small><a
+                                                            rel="nofollow"
+                                                            id="cancel-comment-reply-link"
+                                                            href="#"
+                                                            style="">لغو
+                                                        پاسخ</a></small></h3>
+                                                    <form action="{% url 'hotels:single' hotel.id %}" method="POST"
+                                                          id="commentform" class="comment-form">{% csrf_token %}<p
+                                                            class="comment-notes"><span
+                                                            id="email-notes">نشانی ایمیل شما منتشر نخواهد شد.</span>
+                                                        <span
+                                                                class="required-field-message">بخش‌های موردنیاز علامت‌گذاری شده‌اند <span
+                                                                class="required">*</span></span></p>
+                                                        <div class="row">
+                                                            <div class="col-lg-6 col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>نام شما <span>*</span></label>
+                                                                    <input type="text" name="author" id="name"
+                                                                           class="form-control"
+                                                                           placeholder="نام شما" required="">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-lg-6 col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>ایمیل شما <span>*</span></label>
+                                                                    <input type="email" name="email"
+                                                                           class="form-control"
+                                                                           placeholder="ایمیل شما" required="">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-lg-12 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label>وب سایت شما </label>
+                                                                    <input type="url" name="name" class="form-control"
+                                                                           placeholder="وب سایت شما">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-lg-12 col-md-12">
+                                                            <div class="form-group">
+                                                                <label>نظرشما <span>*</span></label>
+                                                                <textarea name="comment" class="form-control"
+                                                                          id="message"
+                                                                          cols="30"
+                                                                          rows="8" placeholder="نظر شما"></textarea>
+                                                                <input type="hidden" name="refering-comment"
+                                                                       value="{{ comment.id }}">
+                                                            </div>
+                                                        </div>
+                                                        <p class="comment-form-cookies-consent"><input
+                                                                id="wp-comment-cookies-consent"
+                                                                name="wp-comment-cookies-consent"
+                                                                type="checkbox" value="yes"> <label
+                                                                for="wp-comment-cookies-consent">ذخیره نام، ایمیل و
+                                                            وبسایت
+                                                            من در
+                                                            مرورگر برای زمانی که دوباره دیدگاهی می‌نویسم.</label></p>
+                                                        <p class="form-submit"><input name="submit" type="submit"
+                                                                                      id="submit"
+                                                                                      class="submit" value="ارسال نظر">
+                                                            <input
+                                                                    type="hidden" name="comment_post_ID" value="15682"
+                                                                    id="comment_post_ID">
+                                                            <input type="hidden" name="comment_parent"
+                                                                   id="comment_parent"
+                                                                   value="496">
+                                                        </p></form>
+                                                </div>
+
+                                            {% endfor %}
+
+                                            <!-- #comment-## -->
+                                        </ul>
+                                    {% else %}
+                                        نظری وجود ندارد
+                                    {% endif %}
+                                </div>
+
+                                <div class="blog-post-leave-comment bord">
+                                    <div class="comments-form">
+                                        <div class="contact-form">
+
+
+                                            <div id="respond" class="comment-respond">
+                                                <h3 class="title">دیدگاه شما در مورد این مطلب <small><a rel="nofollow"
+                                                                                                        id="cancel-comment-reply-link"
+                                                                                                        href="#"
+                                                                                                        style="display:none;">لغو
+                                                    پاسخ</a></small></h3>
+                                                <form action="{% url 'hotels:single' hotel.id %}" method="POST"
+                                                      id="commentform" class="comment-form">{% csrf_token %}<p
+                                                        class="comment-notes">
+                                                    <span id="email-notes">نشانی ایمیل شما منتشر نخواهد شد.</span> <span
+                                                        class="required-field-message">بخش‌های موردنیاز علامت‌گذاری شده‌اند <span
+                                                        class="required">*</span></span></p>
+                                                    <div class="row">
+                                                        <div class="col-lg-6 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label>نام شما <span>*</span></label>
+                                                                <input type="text" name="author" id="name"
+                                                                       class="form-control" placeholder="نام شما"
+                                                                       required="">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-lg-6 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label>ایمیل شما <span>*</span></label>
+                                                                <input type="email" name="email" class="form-control"
+                                                                       placeholder="ایمیل شما" required="">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-lg-12 col-sm-12">
+                                                            <div class="form-group">
+                                                                <label>وب سایت شما </label>
+                                                                <input type="url" name="name" class="form-control"
+                                                                       placeholder="وب سایت شما">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-12 col-md-12">
+                                                        <div class="form-group">
+                                                            <label>نظرشما <span>*</span></label>
+                                                            <textarea name="comment" class="form-control" id="message"
+                                                                      cols="30" rows="8"
+                                                                      placeholder="نظر شما"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <p class="comment-form-cookies-consent"><input
+                                                            id="wp-comment-cookies-consent"
+                                                            name="wp-comment-cookies-consent" type="checkbox"
+                                                            value="yes"> <label for="wp-comment-cookies-consent">ذخیره
+                                                        نام، ایمیل و وبسایت من در مرورگر برای زمانی که دوباره دیدگاهی
+                                                        می‌نویسم.</label></p>
+                                                    <p class="form-submit"><input name="submit" type="submit"
+                                                                                  id="submit" class="submit"
+                                                                                  value="ارسال نظر"> <input
+                                                            type="hidden" name="comment_post_ID" value="15682"
+                                                            id="comment_post_ID">
+                                                        <input type="hidden" name="comment_parent" id="comment_parent"
+                                                               value="0">
+                                                    </p></form>
+                                            </div><!-- #respond -->
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="side-bar-area fixed">
+                        <div id="tour-sidebar">
+
+                            <div class="tour-number">
+                                <span>اطلاعات تماس </span>
+                                <span class="num">{{ hotel.name }}</span>
+                            </div>
+
+
+                            <div class="d-flex justify-content-center align-items-center gap-1 pt-4">
+
+                                {% for _ in hotel.rating|times %}
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                         class="icon icon-tabler icon-tabler-star-filled"
+                                         width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#f6a915"
+                                         fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                        <path d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+                                              stroke-width="0" fill="#f6a915"></path>
+                                    </svg>
+                                {% endfor %}
+
+                            </div>
+
+                            <div class="det">
+
+
+                                <div class="city">
+                                    <i>
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                             class="icon icon-tabler icon-tabler-map-pin"
+                                             width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5"
+                                             stroke="currentColor" fill="none" stroke-linecap="round"
+                                             stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"></path>
+                                            <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"></path>
+                                        </svg>
+                                    </i>
+                                    <span>
+                                              {{ hotel.address }}
+                                        </span>
+                                </div>
+
+
+                                <div class="city">
+                                    <i>
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                             class="icon icon-tabler icon-tabler-link"
+                                             width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5"
+                                             stroke="currentColor" fill="none" stroke-linecap="round"
+                                             stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <path d="M9 15l6 -6"></path>
+                                            <path d="M11 6l.463 -.536a5 5 0 0 1 7.071 7.072l-.534 .464"></path>
+                                            <path d="M13 18l-.397 .534a5.068 5.068 0 0 1 -7.127 0a4.972 4.972 0 0 1 0 -7.071l.524 -.463"></path>
+                                        </svg>
+                                    </i>
+                                    <span>
+                                              {{ hotel.website }}
+                                        </span>
+                                </div>
+
+
+                                <div class="city">
+                                    <i>
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                             class="icon icon-tabler icon-tabler-phone"
+                                             width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5"
+                                             stroke="currentColor" fill="none" stroke-linecap="round"
+                                             stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"></path>
+                                        </svg>
+                                    </i>
+                                    <span>
+                                             {{ hotel.phone_number }}
+                                        </span>
+                                </div>
+
+
+                                <div class="city">
+                                    <i>
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                             class="icon icon-tabler icon-tabler-mail"
+                                             width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5"
+                                             stroke="currentColor" fill="none" stroke-linecap="round"
+                                             stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"></path>
+                                            <path d="M3 7l9 6l9 -6"></path>
+                                        </svg>
+                                    </i>
+                                    <span>
+                                              {{ hotel.email }}
+                                        </span>
+                                </div>
+
+                            </div>
+
+                            <div id="map" class="map js-map-single"></div>
+                            <link href="https://static.neshan.org/sdk/leaflet/1.4.0/leaflet.css" rel="stylesheet"
+                                  type="text/css">
+                            <script src="https://static.neshan.org/sdk/leaflet/1.4.0/leaflet.js"
+                                    type="text/javascript"></script>
+
+
+                            <script type="text/javascript">
+                                var myMap = new L.Map('map', {
+                                        key: 'web.8ccf1b8b17f3449d8730ed19c2e9b037',
+                                        maptype: 'dreamy',
+                                        poi: true,
+                                        traffic: false,
+                                        center: [{{ hotel.latitude }}, {{ hotel.longitude }}],
+                                        zoom: 16,
+                                    })
+                                ;
+
+                                marker = L.marker([{{ hotel.latitude }}, {{ hotel.longitude }}],
+                                    {
+                                        title: " تاتیتل "
+                                    }
+                                ).addTo(myMap);
+                            </script>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Blog Details Area End -->
+
+{% endblock %}
