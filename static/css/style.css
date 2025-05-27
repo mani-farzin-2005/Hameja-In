@@ -1,0 +1,135 @@
+/*
+Theme Name: easytheme
+Theme URI:  easytheme.net
+Author: naser jafari;
+Author URI:  easytheme.net;
+Description: this is a nice responsive theme 
+Version: 10
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Tags: 
+Text Domain: 
+
+This theme, like WordPress, is licensed under the GPL.
+Use it to make something cool, have fun, and share what you've learned with others.
+*/
+
+
+h2.tour-section-title{
+    border: 1px dashed gold;
+    border-radius: 50px 50px 0 0;
+    text-align: center;
+    padding: 10px;
+    background: #fff1f2;
+}
+
+
+
+.child-pages-container {
+    border: 1px dashed red;
+    position: relative;
+    width: 100%;
+}
+
+.child-pages-header {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    padding: 0 10px;
+    font-size: 14px;
+	font-weight: bold;
+	color: red;
+}
+
+
+.child-pages-content {
+    max-height: 200px;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+}
+
+
+.child-pages-content ul li a {
+    color: #4f0570;
+}
+.child-pages-container:hover .child-pages-content {
+    max-height: none;
+}
+
+.child-pages-content ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.child-pages-content li {
+    margin: 5px 10px;
+}
+
+.icon-click {
+    display: inline-block;
+    width: 57px;
+    height: 40px; /* ارتفاع را متناسب با تصویر تنظیم کنید */
+    background-image: url('./images/click.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    vertical-align: middle;
+}
+
+.single-tour-item2.position-relative {
+    border: 2px solid darkgrey;
+    padding: 20px;
+}
+
+.single-tour-item2.position-relative:nth-child(even) {
+    background-color: #f5f5f5; /* یا هر رنگ دلخواه دیگر */
+}
+
+.blog-img {
+    width: 48%;
+    height: 35%; /* یا هر اندازه دلخواه */
+    overflow: hidden;
+}
+
+.blog-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+
+/* افکت هاور اختیاری */
+.blog-img img:hover {
+    transform: scale(1.1);
+}
+
+@media screen and (max-width: 768px) {
+   .blog-img {
+       width: 100%;
+       height: auto;
+	   text-align: center;
+   }
+   
+   .blog-img img {
+       width: 100%;
+       height: 100%;
+       object-fit: cover;
+   }
+}
+
+.tour-update {
+    color: red;
+    font-weight: 400;
+}
+
+
+
+.flight-hotel:nth-child(odd) {
+    background: #f2f2f2;
+    padding: 5px;
+    border-radius: 8px;
+  
+}

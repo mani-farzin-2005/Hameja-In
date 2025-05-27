@@ -1,0 +1,689 @@
+{% extends 'base.html' %} {% load jalali_tags %}
+{% load static %}
+{% block content %}
+
+<!-- Inner Banner -->
+<div class="inner-banner">
+    <div class="container">
+        <div class="inner-title text-center">
+            <h3>تورها</h3>
+            <ul id="breadcrumbs" class="breadcrumbs">
+                <li class="home"><a class="bread-link bread-home" href="https://hameja.in/" title="صفحه اصلی">صفحه
+                    اصلی</a></li>
+                <li class="separator separator-home"><i class="bx bx-chevrons-left"></i></li>
+                <li class="item-current item-8110"><strong class="bread-current bread-8110"> تورها</strong></li>
+            </ul>
+            <script type="application/ld+json">{"@context":"https:\/\/schema.org","@type":"BreadcrumbList","name":"Breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"item":{"@type":"WebPage","@id":"https:\/\/hameja.in","name":"\u0635\u0641\u062d\u0647 \u0627\u0635\u0644\u06cc"}},{"@type":"ListItem","position":2,"item":{"@type":"WebPage","@id":"https:\/\/hameja.in\/all-tour\/","name":"\u062a\u0648\u0631\u0647\u0627"}}]}</script>
+        </div>
+    </div>
+    <div class="inner-shape">
+        <img src="{% static 'images/shape/inner-shape.png' %}" alt="Images">
+    </div>
+</div>
+<div class="container">
+    <!-- Inner Banner End -->
+    {% for suggest in suggestions %}
+        <div id="tour-list" class="pt-70 pb-50"><h2 class="tour-section-title">{{ suggest.name}}</h2>
+        <div class="tour-list-row">
+            {% for tour in suggest.tours.all %}
+                <div class="single-tour-item d-flex flex-column align-items-center flex-md-row">
+                <div class="img">
+                    <a href="{% url 'tour:tour' tour.id %}" class="overflow-hidden">
+                        <img width="500" height="400" src="{{tour.image.url}}"
+                             class="attachment-blog size-blog wp-post-image" alt="" decoding="async"
+                             fetchpriority="high"> </a>
+                </div>
+                <div class="info d-flex flex-column position-relative flex-md-row">
+                    <div class="right">
+                        <h3>
+                            <a href="{% url 'tour:tour' tour.id %}">
+                                <span class="icon-click"></span>
+                                {{ tour.name}}</a>
+                        </h3>
+
+                        <div class="dates d-flex flex-wrap">
+                            <div class="t-date d-flex align-items-center">
+                    <span class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-month"
+                             width="20" height="20" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor"
+                             fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z"></path>
+                            <path d="M16 3v4"></path>
+                            <path d="M8 3v4"></path>
+                            <path d="M4 11h16"></path>
+                            <path d="M7 14h.013"></path>
+                            <path d="M10.01 14h.005"></path>
+                            <path d="M13.01 14h.005"></path>
+                            <path d="M16.015 14h.005"></path>
+                            <path d="M13.015 17h.005"></path>
+                            <path d="M7.01 17h.005"></path>
+                            <path d="M10.01 17h.005"></path>
+                        </svg>
+                    </span>
+                                <span>تاریخ رفت</span>
+                                <span class="val">{{tour.start_date|to_jalali:'%Y/%m/%d'}}</span>
+                            </div>
+                            <div class="t-date d-flex align-items-center">
+                    <span class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock-edit"
+                             width="20" height="20" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor"
+                             fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M21 12a9 9 0 1 0 -9.972 8.948c.32 .034 .644 .052 .972 .052"></path>
+                            <path d="M12 7v5l2 2"></path>
+                            <path d="M18.42 15.61a2.1 2.1 0 0 1 2.97 2.97l-3.39 3.42h-3v-3l3.42 -3.39z"></path>
+                        </svg>
+                    </span>
+                                <span>اقامت</span>
+                                <span class="val">{{ tour.duration }} شب</span>
+                            </div>
+                        </div>
+                        <div class="hotel-air d-flex flex-wrap">
+                            <ul class="d-flex flex-wrap list-unstyled mb-0">
+                                {% for rate in tour.ratings.all %}
+                                    <li>
+                                <span class="star">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                         class="icon icon-tabler icon-tabler-star-filled" width="16" height="16"
+                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                                         stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                        <path d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+                                              stroke-width="0" fill="currentColor"></path>
+                                    </svg>
+                                </span>
+                                    <span>{{rate.rating }} ستاره</span>
+                                </li>
+                                 {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="left ms-auto position-relative d-flex flex-column justify-content-end">
+                        <div class="offer  position-absolute">پیشنهاد ویژه</div>
+                        <div class="air d-inline-flex">
+                <span class="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plane-tilt" width="18"
+                         height="18" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <path d="M14.5 6.5l3 -2.9a2.05 2.05 0 0 1 2.9 2.9l-2.9 3l2.5 7.5l-2.5 2.55l-3.5 -6.55l-3 3v3l-2 2l-1.5 -4.5l-4.5 -1.5l2 -2h3l3 -3l-6.5 -3.5l2.5 -2.5l7.5 2.5z"></path>
+                    </svg>
+                </span>
+                            {{ tour.flight_go.company_name }}
+                        </div>
+                        <div class="bot d-flex position-relative">
+                            <div class="price position-relative">
+                                <span class="position-absolute tit">شروع قیمت از</span>
+                                <span>
+                        {{ tour.price}} تومان
+                    </span>
+                            </div>
+                            <a href="{% url 'tour:all-tour' %}" class="mor d-none">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     class="icon icon-tabler icon-tabler-chevron-left" width="20" height="20"
+                                     viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                                     stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M15 6l-6 6l6 6"></path>
+                                </svg>
+                            </a>
+                        </div>
+                        <div class="number position-absolute ">
+                            <a href="tel:+982144846267" class="d-flex align-items-center">
+                                <span>رزرو تلفنی تور</span>
+                                <span class="ms-auto num">{{ contact_us.phone_number}}</span>
+                                <span class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-phone-call"
+                             width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                             fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"></path>
+                            <path d="M15 7a2 2 0 0 1 2 2"></path>
+                            <path d="M15 3a6 6 0 0 1 6 6"></path>
+                        </svg>
+                    </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+    {% endfor %}
+    <script type="application/ld+json">{
+    "@context": "https:\/\/schema.org",
+    "@type": "ItemList",
+    "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "item": {
+                "@type": "Product",
+                "name": "تور kish پک شماره 1",
+                "url": "https:\/\/hameja.in\/tour\/tour19\/",
+                "description": "1",
+                "image": "https:\/\/hameja.in\/wp-content\/uploads\/2024\/06\/kish.jpg",
+                "additionalProperty": [
+                    {
+                        "@type": "PropertyValue",
+                        "name": "Duration",
+                        "value": "4 شب"
+                    }
+                ],
+                "offers": {
+                    "@type": "Offer",
+                    "url": "https:\/\/hameja.in\/tour\/tour19\/",
+                    "price": 0,
+                    "priceCurrency": "IRR",
+                    "priceValidUntil": "2025-05-22T19:03:11+03:30",
+                    "availability": "https:\/\/schema.org\/InStock"
+                }
+            }
+        },
+        {
+            "@type": "ListItem",
+            "position": 2,
+            "item": {
+                "@type": "Product",
+                "name": "تور kish پک شماره 12",
+                "url": "https:\/\/hameja.in\/tour\/tour8\/",
+                "description": "12",
+                "image": "https:\/\/hameja.in\/wp-content\/uploads\/2024\/06\/kish-tour-11.jpg",
+                "additionalProperty": [
+                    {
+                        "@type": "PropertyValue",
+                        "name": "Duration",
+                        "value": "3 شب"
+                    }
+                ],
+                "offers": {
+                    "@type": "Offer",
+                    "url": "https:\/\/hameja.in\/tour\/tour8\/",
+                    "price": 0,
+                    "priceCurrency": "IRR",
+                    "priceValidUntil": "2025-05-20T16:47:00+03:30",
+                    "availability": "https:\/\/schema.org\/InStock"
+                }
+            }
+        },
+        {
+            "@type": "ListItem",
+            "position": 3,
+            "item": {
+                "@type": "Product",
+                "name": "تور kish پک شماره 19",
+                "url": "https:\/\/hameja.in\/tour\/tour1\/",
+                "description": "19",
+                "image": "https:\/\/hameja.in\/wp-content\/uploads\/2024\/06\/kish-tour-18.jpg",
+                "additionalProperty": [
+                    {
+                        "@type": "PropertyValue",
+                        "name": "Duration",
+                        "value": "3 شب"
+                    }
+                ],
+                "offers": {
+                    "@type": "Offer",
+                    "url": "https:\/\/hameja.in\/tour\/tour1\/",
+                    "price": 0,
+                    "priceCurrency": "IRR",
+                    "priceValidUntil": "2025-05-20T16:47:20+03:30",
+                    "availability": "https:\/\/schema.org\/InStock"
+                }
+            }
+        },
+        {
+            "@type": "ListItem",
+            "position": 4,
+            "item": {
+                "@type": "Product",
+                "name": "تور kish پک شماره 18",
+                "url": "https:\/\/hameja.in\/tour\/tour2\/",
+                "description": "18",
+                "image": "https:\/\/hameja.in\/wp-content\/uploads\/2024\/06\/kish-tour-17.jpg",
+                "additionalProperty": [
+                    {
+                        "@type": "PropertyValue",
+                        "name": "Duration",
+                        "value": "2 شب"
+                    }
+                ],
+                "offers": {
+                    "@type": "Offer",
+                    "url": "https:\/\/hameja.in\/tour\/tour2\/",
+                    "price": 0,
+                    "priceCurrency": "IRR",
+                    "priceValidUntil": "2025-05-20T16:47:19+03:30",
+                    "availability": "https:\/\/schema.org\/InStock"
+                }
+            }
+        },
+        {
+            "@type": "ListItem",
+            "position": 5,
+            "item": {
+                "@type": "Product",
+                "name": "تور kish پک شماره 17",
+                "url": "https:\/\/hameja.in\/tour\/tour3\/",
+                "description": "17",
+                "image": "https:\/\/hameja.in\/wp-content\/uploads\/2024\/06\/kish-tour-16.jpg",
+                "additionalProperty": [
+                    {
+                        "@type": "PropertyValue",
+                        "name": "Duration",
+                        "value": "3 شب"
+                    }
+                ],
+                "offers": {
+                    "@type": "Offer",
+                    "url": "https:\/\/hameja.in\/tour\/tour3\/",
+                    "price": 0,
+                    "priceCurrency": "IRR",
+                    "priceValidUntil": "2025-05-20T16:47:16+03:30",
+                    "availability": "https:\/\/schema.org\/InStock"
+                }
+            }
+        },
+        {
+            "@type": "ListItem",
+            "position": 6,
+            "item": {
+                "@type": "Product",
+                "name": "تور kish پک شماره 16",
+                "url": "https:\/\/hameja.in\/tour\/tour4\/",
+                "description": "16",
+                "image": "https:\/\/hameja.in\/wp-content\/uploads\/2024\/06\/kish-tour-15.jpg",
+                "additionalProperty": [
+                    {
+                        "@type": "PropertyValue",
+                        "name": "Duration",
+                        "value": "2 شب"
+                    }
+                ],
+                "offers": {
+                    "@type": "Offer",
+                    "url": "https:\/\/hameja.in\/tour\/tour4\/",
+                    "price": 0,
+                    "priceCurrency": "IRR",
+                    "priceValidUntil": "2025-05-20T16:47:14+03:30",
+                    "availability": "https:\/\/schema.org\/InStock"
+                }
+            }
+        },
+        {
+            "@type": "ListItem",
+            "position": 7,
+            "item": {
+                "@type": "Product",
+                "name": "تور kish پک شماره 15",
+                "url": "https:\/\/hameja.in\/tour\/tour5\/",
+                "description": "15",
+                "image": "https:\/\/hameja.in\/wp-content\/uploads\/2024\/06\/kish-tour-14.jpg",
+                "additionalProperty": [
+                    {
+                        "@type": "PropertyValue",
+                        "name": "Duration",
+                        "value": "4 شب"
+                    }
+                ],
+                "offers": {
+                    "@type": "Offer",
+                    "url": "https:\/\/hameja.in\/tour\/tour5\/",
+                    "price": 0,
+                    "priceCurrency": "IRR",
+                    "priceValidUntil": "2025-05-20T16:47:11+03:30",
+                    "availability": "https:\/\/schema.org\/InStock"
+                }
+            }
+        },
+        {
+            "@type": "ListItem",
+            "position": 8,
+            "item": {
+                "@type": "Product",
+                "name": "تور kish پک شماره 14",
+                "url": "https:\/\/hameja.in\/tour\/tour6\/",
+                "description": "14",
+                "image": "https:\/\/hameja.in\/wp-content\/uploads\/2024\/06\/kish-tour-13.jpg",
+                "additionalProperty": [
+                    {
+                        "@type": "PropertyValue",
+                        "name": "Duration",
+                        "value": "2 شب"
+                    }
+                ],
+                "offers": {
+                    "@type": "Offer",
+                    "url": "https:\/\/hameja.in\/tour\/tour6\/",
+                    "price": 0,
+                    "priceCurrency": "IRR",
+                    "priceValidUntil": "2025-05-20T16:47:08+03:30",
+                    "availability": "https:\/\/schema.org\/InStock"
+                }
+            }
+        },
+        {
+            "@type": "ListItem",
+            "position": 9,
+            "item": {
+                "@type": "Product",
+                "name": "تور kish پک شماره 13",
+                "url": "https:\/\/hameja.in\/tour\/tour7\/",
+                "description": "13",
+                "image": "https:\/\/hameja.in\/wp-content\/uploads\/2024\/06\/kish-tour-12.jpg",
+                "additionalProperty": [
+                    {
+                        "@type": "PropertyValue",
+                        "name": "Duration",
+                        "value": "4 شب"
+                    }
+                ],
+                "offers": {
+                    "@type": "Offer",
+                    "url": "https:\/\/hameja.in\/tour\/tour7\/",
+                    "price": 0,
+                    "priceCurrency": "IRR",
+                    "priceValidUntil": "2025-05-20T16:47:04+03:30",
+                    "availability": "https:\/\/schema.org\/InStock"
+                }
+            }
+        },
+        {
+            "@type": "ListItem",
+            "position": 10,
+            "item": {
+                "@type": "Product",
+                "name": "تور kish پک شماره 11",
+                "url": "https:\/\/hameja.in\/tour\/tour9\/",
+                "description": "11",
+                "image": "https:\/\/hameja.in\/wp-content\/uploads\/2024\/06\/kish-tour-10.jpg",
+                "additionalProperty": [
+                    {
+                        "@type": "PropertyValue",
+                        "name": "Duration",
+                        "value": "4 شب"
+                    }
+                ],
+                "offers": {
+                    "@type": "Offer",
+                    "url": "https:\/\/hameja.in\/tour\/tour9\/",
+                    "price": 0,
+                    "priceCurrency": "IRR",
+                    "priceValidUntil": "2025-05-20T16:46:57+03:30",
+                    "availability": "https:\/\/schema.org\/InStock"
+                }
+            }
+        },
+        {
+            "@type": "ListItem",
+            "position": 11,
+            "item": {
+                "@type": "Product",
+                "name": "تور kish پک شماره 2",
+                "url": "https:\/\/hameja.in\/tour\/tour18\/",
+                "description": "2",
+                "image": "https:\/\/hameja.in\/wp-content\/uploads\/2024\/06\/kish-tour.jpg",
+                "additionalProperty": [
+                    {
+                        "@type": "PropertyValue",
+                        "name": "Duration",
+                        "value": "3 شب"
+                    }
+                ],
+                "offers": {
+                    "@type": "Offer",
+                    "url": "https:\/\/hameja.in\/tour\/tour18\/",
+                    "price": 0,
+                    "priceCurrency": "IRR",
+                    "priceValidUntil": "2025-05-22T19:03:46+03:30",
+                    "availability": "https:\/\/schema.org\/InStock"
+                }
+            }
+        },
+        {
+            "@type": "ListItem",
+            "position": 12,
+            "item": {
+                "@type": "Product",
+                "name": "تور kish پک شماره 10",
+                "url": "https:\/\/hameja.in\/tour\/tour10\/",
+                "description": "10",
+                "image": "https:\/\/hameja.in\/wp-content\/uploads\/2024\/06\/kish-tour-9.jpg",
+                "additionalProperty": [
+                    {
+                        "@type": "PropertyValue",
+                        "name": "Duration",
+                        "value": "2 شب"
+                    }
+                ],
+                "offers": {
+                    "@type": "Offer",
+                    "url": "https:\/\/hameja.in\/tour\/tour10\/",
+                    "price": 0,
+                    "priceCurrency": "IRR",
+                    "priceValidUntil": "2025-05-20T16:46:52+03:30",
+                    "availability": "https:\/\/schema.org\/InStock"
+                }
+            }
+        },
+        {
+            "@type": "ListItem",
+            "position": 13,
+            "item": {
+                "@type": "Product",
+                "name": "تور kish پک شماره 9",
+                "url": "https:\/\/hameja.in\/tour\/tour11\/",
+                "description": "9",
+                "image": "https:\/\/hameja.in\/wp-content\/uploads\/2024\/06\/kish-tour-8.jpg",
+                "additionalProperty": [
+                    {
+                        "@type": "PropertyValue",
+                        "name": "Duration",
+                        "value": "3 شب"
+                    }
+                ],
+                "offers": {
+                    "@type": "Offer",
+                    "url": "https:\/\/hameja.in\/tour\/tour11\/",
+                    "price": 0,
+                    "priceCurrency": "IRR",
+                    "priceValidUntil": "2025-05-20T16:46:47+03:30",
+                    "availability": "https:\/\/schema.org\/InStock"
+                }
+            }
+        },
+        {
+            "@type": "ListItem",
+            "position": 14,
+            "item": {
+                "@type": "Product",
+                "name": "تور kish پک شماره 8",
+                "url": "https:\/\/hameja.in\/tour\/tour12\/",
+                "description": "8",
+                "image": "https:\/\/hameja.in\/wp-content\/uploads\/2024\/06\/kish-tour-7.jpg",
+                "additionalProperty": [
+                    {
+                        "@type": "PropertyValue",
+                        "name": "Duration",
+                        "value": "3 شب"
+                    }
+                ],
+                "offers": {
+                    "@type": "Offer",
+                    "url": "https:\/\/hameja.in\/tour\/tour12\/",
+                    "price": 0,
+                    "priceCurrency": "IRR",
+                    "priceValidUntil": "2025-05-20T16:46:41+03:30",
+                    "availability": "https:\/\/schema.org\/InStock"
+                }
+            }
+        },
+        {
+            "@type": "ListItem",
+            "position": 15,
+            "item": {
+                "@type": "Product",
+                "name": "تور kish پک شماره 7",
+                "url": "https:\/\/hameja.in\/tour\/tour13\/",
+                "description": "7",
+                "image": "https:\/\/hameja.in\/wp-content\/uploads\/2024\/06\/kish-tour-6.jpg",
+                "additionalProperty": [
+                    {
+                        "@type": "PropertyValue",
+                        "name": "Duration",
+                        "value": "4 شب"
+                    }
+                ],
+                "offers": {
+                    "@type": "Offer",
+                    "url": "https:\/\/hameja.in\/tour\/tour13\/",
+                    "price": 0,
+                    "priceCurrency": "IRR",
+                    "priceValidUntil": "2025-05-22T19:05:44+03:30",
+                    "availability": "https:\/\/schema.org\/InStock"
+                }
+            }
+        },
+        {
+            "@type": "ListItem",
+            "position": 16,
+            "item": {
+                "@type": "Product",
+                "name": "تور kish پک شماره 6",
+                "url": "https:\/\/hameja.in\/tour\/tour14\/",
+                "description": "6",
+                "image": "https:\/\/hameja.in\/wp-content\/uploads\/2024\/06\/kish-tour-5.jpg",
+                "additionalProperty": [
+                    {
+                        "@type": "PropertyValue",
+                        "name": "Duration",
+                        "value": "3 شب"
+                    }
+                ],
+                "offers": {
+                    "@type": "Offer",
+                    "url": "https:\/\/hameja.in\/tour\/tour14\/",
+                    "price": 0,
+                    "priceCurrency": "IRR",
+                    "priceValidUntil": "2025-05-22T19:04:20+03:30",
+                    "availability": "https:\/\/schema.org\/InStock"
+                }
+            }
+        },
+        {
+            "@type": "ListItem",
+            "position": 17,
+            "item": {
+                "@type": "Product",
+                "name": "تور kish پک شماره 5",
+                "url": "https:\/\/hameja.in\/tour\/tour15\/",
+                "description": "5",
+                "image": "https:\/\/hameja.in\/wp-content\/uploads\/2024\/06\/kish-tour-4.jpg",
+                "additionalProperty": [
+                    {
+                        "@type": "PropertyValue",
+                        "name": "Duration",
+                        "value": "4 شب"
+                    }
+                ],
+                "offers": {
+                    "@type": "Offer",
+                    "url": "https:\/\/hameja.in\/tour\/tour15\/",
+                    "price": 0,
+                    "priceCurrency": "IRR",
+                    "priceValidUntil": "2025-05-22T19:04:10+03:30",
+                    "availability": "https:\/\/schema.org\/InStock"
+                }
+            }
+        },
+        {
+            "@type": "ListItem",
+            "position": 18,
+            "item": {
+                "@type": "Product",
+                "name": "تور kish پک شماره 3",
+                "url": "https:\/\/hameja.in\/tour\/tour17\/",
+                "description": "3",
+                "image": "https:\/\/hameja.in\/wp-content\/uploads\/2024\/06\/kish-tour-2.jpg",
+                "additionalProperty": [
+                    {
+                        "@type": "PropertyValue",
+                        "name": "Duration",
+                        "value": "3 شب"
+                    }
+                ],
+                "offers": {
+                    "@type": "Offer",
+                    "url": "https:\/\/hameja.in\/tour\/tour17\/",
+                    "price": 0,
+                    "priceCurrency": "IRR",
+                    "priceValidUntil": "2025-05-22T19:03:50+03:30",
+                    "availability": "https:\/\/schema.org\/InStock"
+                }
+            }
+        },
+        {
+            "@type": "ListItem",
+            "position": 19,
+            "item": {
+                "@type": "Product",
+                "name": "تور kish پک شماره 4",
+                "url": "https:\/\/hameja.in\/tour\/tour16\/",
+                "description": "4",
+                "image": "https:\/\/hameja.in\/wp-content\/uploads\/2024\/06\/kish-tour-3.jpg",
+                "additionalProperty": [
+                    {
+                        "@type": "PropertyValue",
+                        "name": "Duration",
+                        "value": "4 شب"
+                    }
+                ],
+                "offers": {
+                    "@type": "Offer",
+                    "url": "https:\/\/hameja.in\/tour\/tour16\/",
+                    "price": 0,
+                    "priceCurrency": "IRR",
+                    "priceValidUntil": "2025-05-22T19:03:58+03:30",
+                    "availability": "https:\/\/schema.org\/InStock"
+                }
+            }
+        },
+        {
+            "@type": "ListItem",
+            "position": 20,
+            "item": {
+                "@type": "Product",
+                "name": "تور kish پک شماره 20",
+                "url": "https:\/\/hameja.in\/tour\/tour-0\/",
+                "description": "20",
+                "image": "https:\/\/hameja.in\/wp-content\/uploads\/2024\/06\/kish-tour-19.jpg",
+                "additionalProperty": [
+                    {
+                        "@type": "PropertyValue",
+                        "name": "Duration",
+                        "value": "4 شب"
+                    }
+                ],
+                "offers": {
+                    "@type": "Offer",
+                    "url": "https:\/\/hameja.in\/tour\/tour-0\/",
+                    "price": 0,
+                    "priceCurrency": "IRR",
+                    "priceValidUntil": "2025-05-20T16:47:22+03:30",
+                    "availability": "https:\/\/schema.org\/InStock"
+                }
+            }
+        }
+    ]
+}</script>
+</div>
+{% endblock %}
+
+
+
+
+
+

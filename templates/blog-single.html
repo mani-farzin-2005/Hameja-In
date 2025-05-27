@@ -1,0 +1,393 @@
+{% extends 'base.html' %} {% load jalali_tags %}
+{% load static %}
+<!-- informations starts -->
+<!-- Inner Banner -->
+{% block content %}
+
+
+    <div class="inner-banner">
+        <div class="container">
+            <div class="inner-title text-center">
+                <h3>{{ post.title }}</h3>
+                <ul id="breadcrumbs" class="breadcrumbs">
+                    <li class="home"><a class="bread-link bread-home" href="{% url 'website:home' %}" title="صفحه اصلی">صفحه
+                        اصلی</a></li>
+                    <li class="separator separator-home"><i class="bx bx-chevrons-left"></i></li>
+                    <li class="item-cat"><a href="https://hameja.in/category/blog/">blog</a></li>
+                    <li class="separator"><i class="bx bx-chevrons-left"></i></li>
+                    <li class="item-current item-15690"><strong class="bread-current bread-15690"
+                                                                title="{{ post.title }}">{{ post.title }}</strong></li>
+                </ul>
+
+                <script type="application/ld+json">{"@context":"{{ request.scheme }}://{{ request.get_host }}{% url 'website:home' %}","@type":"BreadcrumbList","name":"Breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"item":{"@type":"WebPage","@id":"{{ request.scheme }}://{{ request.get_host }}{% url 'website:home' %}","name":"\u0635\u0641\u062d\u0647 \u0627\u0635\u0644\u06cc"}},{"@type":"ListItem","position":2,"item":{"@type":"WebPage","@id":"{{ request.scheme }}://{{ request.get_host }}{% url 'blog:home' %}","name":"blog"}}]}</script>
+            </div>
+        </div>
+        <div class="inner-shape">
+            <img src="{% static 'images/shape/inner-shape.png' %}"
+                 alt="Images">
+        </div>
+    </div>
+    <!-- Inner Banner End -->
+
+
+    <!-- Blog Details Area -->
+    <div class="blog-details-area pt-100 pb-70">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="blog-article">
+                        <div class="blog-article-img">
+                            <img width="1000" height="443"
+                                 src="{{ post.image.url }}"
+                                 class="attachment-bloghor size-bloghor wp-post-image" alt="{{ post.title }}"
+                                 decoding="async"
+                                 fetchpriority="high">
+                            <div class="blog-article-tag">
+                                <h3>{{ post.published_date|to_jalali:'%Y/%m/%d' }}</h3>
+                            </div>
+                        </div>
+
+                        <div class="blog-article-title">
+                            <ul>
+                                <li><i class="bx bxs-user"></i>{{ post.author }}</li>
+                                <li><i class="bx bx-show-alt"></i>
+                                    {{ post.views }}
+                                    بازدید
+                                </li>
+                                <li><i class="bx bxs-conversation"></i>{{ comment_counts }} نظر</li>
+                            </ul>
+                            <h2>{{ post.title }}</h2>
+                        </div>
+
+                        <div class="article-content">
+                            <div class="content-text">
+
+                                <p>{{ post.description }}</p>
+
+
+                                <figure class="wp-block-video">
+                                    <video controls="" src="{{ post.video_file.url }}"></video>
+                                    <figcaption class="wp-element-caption">{{ post.title }}</figcaption>
+                                </figure>
+
+
+                                {{ post.content|safe }}
+                            </div>
+                        </div>
+
+                        <div class="blog-article-share">
+                            <div class="row align-items-center">
+                                <div class="col-lg-7 col-sm-7 col-md-7">
+                                    <div class="blog-tag">
+
+                                        <ul>
+                                            <li><i class="bx bx-purchase-tag-alt"></i> برچسب ها:</li>
+                                            {% for tag in post.tags.all %}
+                                                <li>
+                                                    <a href="{% url 'website:tag' tag.id %}"
+                                                       rel="tag">{{ tag }}</a></li>{% endfor %}
+
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-5 col-sm-5 col-md-5">
+                                    <ul class="social-icon">
+                                        <li>
+                                            <a href="{{ post.facebook }}"
+                                               target="_blank">
+                                                <i class="bx bxl-facebook"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ post.twitter }}"
+                                               target="_blank">
+                                                <i class="bx bxl-twitter"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ post.linkdin }}"
+                                               target="_blank">
+                                                <i class="bx bxl-linkedin-square"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ post.instagram }}"
+                                               target="_blank">
+                                                <i class="bx bxl-instagram"></i>
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="comments">
+
+                            {% if post.comments %}
+                                <div class="comments-wrap">
+
+
+                                    <!-- End Comment -->
+                                    <div class="comment-title">
+                                        <h3 class="title">نظر </h3>
+                                    </div>
+                                    {% if comments %}
+                                        <ul class="comment-list">
+                                            {% for comment in comments %}
+                                                <li class="comment even thread-even depth-1" id="comment-496">
+                                                    <img src="{% static 'images/avatar.jpg' %}"
+                                                         alt=""
+                                                         class="img-circle" width="54" height="54">
+
+                                                    <h3>{{ comment.name }}</h3>
+                                                    <span>{{ comment.time|to_jalali:'%Y/%m/%d--%H:%M:%S' }}</span>
+                                                    <p>{{ comment.text }}</p>
+                                                    <a rel="nofollow" class="comment-reply-link"
+                                                       href="#comment-{{ comment.id }}"
+                                                       data-commentid="{{ comment.id }}" data-postid="15682"
+                                                       data-belowelement="{{ comment.id }}"
+                                                       data-respondelement="respond">پاسخ</a>
+
+                                                </li>
+                                                <div id="respond" class="comment-respond">
+                                                    <h3 class="title">دیدگاه شما در مورد این مطلب <small><a
+                                                            rel="nofollow"
+                                                            id="cancel-comment-reply-link"
+                                                            href="#"
+                                                            style="">لغو
+                                                        پاسخ</a></small></h3>
+                                                    <form action="{% url 'website:post' post.id %}" method="POST"
+                                                          id="commentform" class="comment-form">{% csrf_token %}<p
+                                                            class="comment-notes"><span
+                                                            id="email-notes">نشانی ایمیل شما منتشر نخواهد شد.</span>
+                                                        <span
+                                                                class="required-field-message">بخش‌های موردنیاز علامت‌گذاری شده‌اند <span
+                                                                class="required">*</span></span></p>
+                                                        <div class="row">
+                                                            <div class="col-lg-6 col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>نام شما <span>*</span></label>
+                                                                    <input type="text" name="author" id="name"
+                                                                           class="form-control"
+                                                                           placeholder="نام شما" required="">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-lg-6 col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>ایمیل شما <span>*</span></label>
+                                                                    <input type="email" name="email"
+                                                                           class="form-control"
+                                                                           placeholder="ایمیل شما" required="">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-lg-12 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label>وب سایت شما </label>
+                                                                    <input type="url" name="name" class="form-control"
+                                                                           placeholder="وب سایت شما">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-lg-12 col-md-12">
+                                                            <div class="form-group">
+                                                                <label>نظرشما <span>*</span></label>
+                                                                <textarea name="comment" class="form-control"
+                                                                          id="message"
+                                                                          cols="30"
+                                                                          rows="8" placeholder="نظر شما"></textarea>
+                                                                <input type="hidden" name="refering-comment"
+                                                                       value="{{ comment.id }}">
+                                                            </div>
+                                                        </div>
+                                                        <p class="comment-form-cookies-consent"><input
+                                                                id="wp-comment-cookies-consent"
+                                                                name="wp-comment-cookies-consent"
+                                                                type="checkbox" value="yes"> <label
+                                                                for="wp-comment-cookies-consent">ذخیره نام، ایمیل و
+                                                            وبسایت
+                                                            من در
+                                                            مرورگر برای زمانی که دوباره دیدگاهی می‌نویسم.</label></p>
+                                                        <p class="form-submit"><input name="submit" type="submit"
+                                                                                      id="submit"
+                                                                                      class="submit" value="ارسال نظر">
+                                                            <input
+                                                                    type="hidden" name="comment_post_ID" value="15682"
+                                                                    id="comment_post_ID">
+                                                            <input type="hidden" name="comment_parent"
+                                                                   id="comment_parent"
+                                                                   value="496">
+                                                        </p></form>
+                                                </div>
+
+                                            {% endfor %}
+
+                                            <!-- #comment-## -->
+                                        </ul>
+                                    {% else %}
+                                        نظری وجود ندارد
+                                    {% endif %}
+                                </div>
+
+                                <div class="blog-post-leave-comment bord">
+                                    <div class="comments-form">
+                                        <div class="contact-form">
+
+
+                                            <div id="respond" class="comment-respond">
+                                                <h3 class="title">دیدگاه شما در مورد این مطلب <small><a rel="nofollow"
+                                                                                                        id="cancel-comment-reply-link"
+                                                                                                        href="{% url 'website:post' post.id %}/#respond"
+                                                                                                        style="display:none;">لغو
+                                                    پاسخ</a></small></h3>
+                                                <form action="{% url 'website:post' post.id %}" method="POST"
+                                                      id="commentform" class="comment-form">{% csrf_token %}<p
+                                                        class="comment-notes">
+                                                    <span id="email-notes">نشانی ایمیل شما منتشر نخواهد شد.</span> <span
+                                                        class="required-field-message">بخش‌های موردنیاز علامت‌گذاری شده‌اند <span
+                                                        class="required">*</span></span></p>
+                                                    <div class="row">
+                                                        <div class="col-lg-6 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label>نام شما <span>*</span></label>
+                                                                <input type="text" name="author" id="name"
+                                                                       class="form-control" placeholder="نام شما"
+                                                                       required="">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-lg-6 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label>ایمیل شما <span>*</span></label>
+                                                                <input type="email" name="email" class="form-control"
+                                                                       placeholder="ایمیل شما" required="">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-lg-12 col-sm-12">
+                                                            <div class="form-group">
+                                                                <label>وب سایت شما </label>
+                                                                <input type="url" name="name" class="form-control"
+                                                                       placeholder="وب سایت شما">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-12 col-md-12">
+                                                        <div class="form-group">
+                                                            <label>نظرشما <span>*</span></label>
+                                                            <textarea name="comment" class="form-control" id="message"
+                                                                      cols="30" rows="8"
+                                                                      placeholder="نظر شما"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <p class="comment-form-cookies-consent"><input
+                                                            id="wp-comment-cookies-consent"
+                                                            name="wp-comment-cookies-consent" type="checkbox"
+                                                            value="yes"> <label for="wp-comment-cookies-consent">ذخیره
+                                                        نام، ایمیل و وبسایت من در مرورگر برای زمانی که دوباره دیدگاهی
+                                                        می‌نویسم.</label></p>
+                                                    <p class="form-submit"><input name="submit" type="submit"
+                                                                                  id="submit" class="submit"
+                                                                                  value="ارسال نظر"> <input
+                                                            type="hidden" name="comment_post_ID" value="15682"
+                                                            id="comment_post_ID">
+                                                        <input type="hidden" name="comment_parent" id="comment_parent"
+                                                               value="0">
+                                                    </p></form>
+                                            </div><!-- #respond -->
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="side-bar-area">
+                        <div class="search-widget">
+                            <form class="search-form" method="get" action="https://hameja.in/" role="search">
+                                <input type="search" class="form-control" placeholder="جستجو  کنید" value="" name="s">
+                                <button type="submit">
+                                    <i class="bx bx-search"></i>
+                                </button>
+                            </form>
+                        </div>
+
+                        <div class="side-bar-widget">
+                            <h3 class="title">دسته بندی های</h3>
+                            <div class="side-bar-categories">
+                                <ul>
+                                    <li>
+                                        <div class="line-circle"></div>
+                                        <a href="{% url 'blog:home' %}">blog<span>[{{ blog_count }}]</span></a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="side-bar-widget">
+                            <h3 class="title">آخرین مطالب</h3>
+                            <div class="widget-popular-post">
+                                {% for blog in blogs %}
+                                    <article class="item">
+                                        <a href="{% url 'website:post' blog.id %}" class="thumb">
+                                            <img width="150" height="150"
+                                                 src="{{ blog.image.url }}"
+                                                 class="attachment-thumbnail size-thumbnail wp-post-image"
+                                                 alt="{{ blog.title }}" decoding="async" loading="lazy"> </a>
+                                        <div class="info">
+                                            <h4 class="title-text">
+                                                <a href="{% url 'website:post' blog.id %}">
+                                                    {{ blog.title }} </a>
+                                            </h4>
+                                            <p>{{ blog.published_date|to_jalali:'%Y/%m/%d' }}</p>
+                                        </div>
+                                    </article>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <div class="side-bar-widget">
+                            <h3 class="title">برچسب ها</h3>
+                            <ul class="side-bar-widget-tag">
+                                {% for tag in tags %}
+                                    <li>
+                                        <a href="{% url 'website:tag' tag.id %}">{{ tag }}</a>
+                                    </li>
+                                {% endfor %}
+
+                            </ul>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Blog Details Area End -->
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
