@@ -22,19 +22,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '%ki2yfd46i(b^wrd&(qu)t(b=x0t9y38k(it3q+uq4knfj3no*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True    
 
 
 ALLOWED_HOSTS = ['*']
 
 # Application definition
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
-SECURE_HSTS_SECONDS = 31536000
+CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = False
+SECURE_HSTS_SECONDS = 0
 
-SECURE_SSL_REDIRECT = True
-SECURE_HSTS_PRELOAD = True
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_SSL_REDIRECT = False
+SECURE_HSTS_PRELOAD = False
+SECURE_HSTS_INCLUDE_SUBDOMAINS = False
 
 INSTALLED_APPS = [
 
