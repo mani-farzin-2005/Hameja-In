@@ -22,7 +22,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '%ki2yfd46i(b^wrd&(qu)t(b=x0t9y38k(it3q+uq4knfj3no*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+<<<<<<< Updated upstream
 DEBUG = True    
+=======
+DEBUG = True
+>>>>>>> Stashed changes
 
 
 ALLOWED_HOSTS = ['*']
@@ -30,11 +34,19 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 CSRF_COOKIE_SECURE = False
 SESSION_COOKIE_SECURE = False
+<<<<<<< Updated upstream
 SECURE_HSTS_SECONDS = 0
 
 SECURE_SSL_REDIRECT = False
 SECURE_HSTS_PRELOAD = False
 SECURE_HSTS_INCLUDE_SUBDOMAINS = False
+=======
+SECURE_SSL_REDIRECT = False
+SECURE_HSTS_SECONDS = 0
+SECURE_HSTS_PRELOAD = False
+SECURE_HSTS_INCLUDE_SUBDOMAINS = False
+
+>>>>>>> Stashed changes
 
 INSTALLED_APPS = [
 
@@ -48,6 +60,8 @@ INSTALLED_APPS = [
     'blog', 'hotel', 'tour',
     'django_ckeditor_5'
 ]
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

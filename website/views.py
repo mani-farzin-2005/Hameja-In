@@ -112,6 +112,6 @@ def post(request,id):
             x.save()
 
     comments =Comment.objects.filter(post=possst,is_reply=False,display=True)
-    for com in comments:
-        print(com.name)
-    return render(request, 'blog-single.html', {"post": possst,'comments':comments, 'headers': heads, 'website': web, 'contact_us': contac, 'about_us': abo, 'blogs': bl,'tags':tags, 'blog_count':blog_count})
+    comments_number = comments.count()
+
+    return render(request, 'blog-single.html', {"post": possst,'comments':comments, 'headers': heads, 'website': web, 'contact_us': contac, 'about_us': abo, 'blogs': bl,'tags':tags, 'blog_count':blog_count, 'comment_counts':comments_number})

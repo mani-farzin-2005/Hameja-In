@@ -43,4 +43,4 @@ def single(request , id):
                                        reply_id=refering_comment)
             x.save()
     comments = Comment.objects.filter(is_reply=False,hotel=hot,display=True)
-    return render(request,'hotel-single.html',{'hotel':hot,'headers': heads, 'website': web, 'contact_us': contac, 'about_us': abo, 'blogs': bl , 'services':service,'comments':comments})
+    return render(request,'hotel-single.html',{'hotel':hot,'headers': heads, 'website': web, 'contact_us': contac, 'about_us': abo, 'blogs': bl , 'services':service,'comments':comments })
