@@ -1,5 +1,8 @@
 {% extends 'base.html' %} {% load jalali_tags %} {% load static %}
 {% load customtag %}
+{% block title %}
+<title>{{ tour.name }}</title>
+{% endblock %}
 {% block content %}
 
     <!-- informations starts -->
@@ -20,7 +23,7 @@
                                                                 title="{{ tour.name }}">{{ tour.name }}</strong></li>
                 </ul>
                 <script type="application/ld+json">{
-                "@context": "https:\/\/schema.org",
+                "@context": "https://schema.org",
                 "@type": "BreadcrumbList",
                 "name": "Breadcrumb",
                 "itemListElement": [
@@ -745,10 +748,11 @@
                     </div>
                     <div class="blog-article">
 
-                        <div id="comments">
+                        {% if tour.comments %}
+                            <div id="comments">
 
-                            {% if tour.comments %}
-                                <div class="comments-wrap">
+
+                                <div id="comment-wraping" class="comments-wrap">
 
 
                                     <!-- End Comment -->
@@ -756,102 +760,39 @@
                                         <h3 class="title">نظر </h3>
                                     </div>
                                     {% if comments %}
-                                        <ul class="comment-list">
+                                        <ul id="comment_list_section" class="comment-list">
                                             {% for comment in comments %}
-                                                <li class="comment even thread-even depth-1" id="comment-496">
+                                                <li class="comment even thread-even depth-1" id="comment-502">
                                                     <img src="{% static 'images/avatar.jpg' %}"
-                                                         alt=""
-                                                         class="img-circle" width="54" height="54">
+                                                         alt="" class="img-circle" width="54" height="54">
 
                                                     <h3>{{ comment.name }}</h3>
-                                                    <span>{{ comment.time|to_jalali:'%Y/%m/%d--%H:%M:%S' }}</span>
+                                                    <span>{{ comment.time|to_jalali:'%Y/%m/%d' }}</span>
                                                     <p>{{ comment.text }}</p>
-                                                    <a rel="nofollow" class="comment-reply-link"
-                                                       href="#comment-{{ comment.id }}"
-                                                       data-commentid="{{ comment.id }}" data-postid="15682"
-                                                       data-belowelement="{{ comment.id }}"
-                                                       data-respondelement="respond">پاسخ</a>
+                                                    <a rel="nofollow" class="comment-reply-link" href="#commentform"
+                                                       onclick="replyment_to_comments('{{ comment.name|escapejs }}' , {{ comment.id }})">پاسخ</a>
+                                                    <ul id="comment-list-{{ comment.id }}" class="comment-list">
+                                                     {% for replyment in comment.repliments.all %}
+                                                           {% if replyment.display %}
+                                                                <li class="comment even thread-even depth-1" id="comment-502">
+                                                            <img src="{% static 'images/avatar.jpg' %}" alt=""
+                                                                 class="img-circle" width="54" height="54">
 
+                                                            <h3>{{ replyment.name }}</h3>
+                                                            <span>{{ replyment.time|to_jalali:'%Y/%m/%d'}}</span>
+                                                            <p>{{replyment.text}}</p>
+                                                            <!-- <a rel="nofollow" class="comment-reply-link" href="/80s-fonts-a-retro-typographic-trend-examples/?replytocom=94#respond" data-commentid="94" data-postid="10762" data-belowelement="div-comment-94" data-respondelement="respond" aria-label="Reply to admin">Reply</a> -->
+                                                        </li>
+                                                           {% endif %}
+                                                     {% endfor %}
+                                                    </ul>
+                                                    <!-- <a rel="nofollow" class="comment-reply-link" href="/80s-fonts-a-retro-typographic-trend-examples/?replytocom=94#respond" data-commentid="94" data-postid="10762" data-belowelement="div-comment-94" data-respondelement="respond" aria-label="Reply to admin">Reply</a> -->
                                                 </li>
-                                                <div id="respond" class="comment-respond">
-                                                    <h3 class="title">دیدگاه شما در مورد این مطلب <small><a
-                                                            rel="nofollow"
-                                                            id="cancel-comment-reply-link"
-                                                            href="#"
-                                                            style="">لغو
-                                                        پاسخ</a></small></h3>
-                                                    <form action="{% url 'tour:tour' tour %}" method="POST"
-                                                          id="commentform" class="comment-form">{% csrf_token %}<p
-                                                            class="comment-notes"><span
-                                                            id="email-notes">نشانی ایمیل شما منتشر نخواهد شد.</span>
-                                                        <span
-                                                                class="required-field-message">بخش‌های موردنیاز علامت‌گذاری شده‌اند <span
-                                                                class="required">*</span></span></p>
-                                                        <div class="row">
-                                                            <div class="col-lg-6 col-sm-6">
-                                                                <div class="form-group">
-                                                                    <label>نام شما <span>*</span></label>
-                                                                    <input type="text" name="author" id="name"
-                                                                           class="form-control"
-                                                                           placeholder="نام شما" required="">
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-lg-6 col-sm-6">
-                                                                <div class="form-group">
-                                                                    <label>ایمیل شما <span>*</span></label>
-                                                                    <input type="email" name="email"
-                                                                           class="form-control"
-                                                                           placeholder="ایمیل شما" required="">
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-lg-12 col-sm-12">
-                                                                <div class="form-group">
-                                                                    <label>وب سایت شما </label>
-                                                                    <input type="url" name="name" class="form-control"
-                                                                           placeholder="وب سایت شما">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-lg-12 col-md-12">
-                                                            <div class="form-group">
-                                                                <label>نظرشما <span>*</span></label>
-                                                                <textarea name="comment" class="form-control"
-                                                                          id="message"
-                                                                          cols="30"
-                                                                          rows="8" placeholder="نظر شما"></textarea>
-                                                                <input type="hidden" name="refering-comment"
-                                                                       value="{{ comment.id }}">
-                                                            </div>
-                                                        </div>
-                                                        <p class="comment-form-cookies-consent"><input
-                                                                id="wp-comment-cookies-consent"
-                                                                name="wp-comment-cookies-consent"
-                                                                type="checkbox" value="yes"> <label
-                                                                for="wp-comment-cookies-consent">ذخیره نام، ایمیل و
-                                                            وبسایت
-                                                            من در
-                                                            مرورگر برای زمانی که دوباره دیدگاهی می‌نویسم.</label></p>
-                                                        <p class="form-submit"><input name="submit" type="submit"
-                                                                                      id="submit"
-                                                                                      class="submit" value="ارسال نظر">
-                                                            <input
-                                                                    type="hidden" name="comment_post_ID" value="15682"
-                                                                    id="comment_post_ID">
-                                                            <input type="hidden" name="comment_parent"
-                                                                   id="comment_parent"
-                                                                   value="496">
-                                                        </p></form>
-                                                </div>
-
                                             {% endfor %}
-
-                                            <!-- #comment-## -->
                                         </ul>
                                     {% else %}
-                                        نظری وجود ندارد
+                                        <div id="no_comment" class="noc">هیچ دیدگاهی وجود ندارد شما اولین نفر باشید
+                                        </div>
                                     {% endif %}
                                 </div>
 
@@ -861,16 +802,19 @@
 
 
                                             <div id="respond" class="comment-respond">
-                                                <h3 class="title">دیدگاه شما در مورد این مطلب <small><a rel="nofollow"
-                                                                                                        id="cancel-comment-reply-link"
-                                                                                                        href="{% url 'tour:tour' tour.id %}/#respond"
-                                                                                                        style="display:none;">لغو
-                                                    پاسخ</a></small></h3>
-                                                <form action="{% url 'tour:tour' tour.id %}" method="POST"
-                                                      id="commentform" class="comment-form">{% csrf_token %}<p class="comment-notes">
-                                                    <span id="email-notes">نشانی ایمیل شما منتشر نخواهد شد.</span> <span
-                                                        class="required-field-message">بخش‌های موردنیاز علامت‌گذاری شده‌اند <span
-                                                        class="required">*</span></span></p>
+                                                <h3 id="form-title-for-comment" class="title">دیدگاه شما در مورد این
+                                                    مطلب <small><a rel="nofollow"
+                                                                   id="cancel-comment-reply-link"
+                                                                   href="#"
+                                                                   style="display:none;">لغو
+                                                        پاسخ</a></small></h3>
+                                                <form id="commentform" class="comment-form">
+                                                    {% csrf_token %}
+                                                    <p class="comment-notes"><span
+                                                            id="email-notes">نشانی ایمیل شما منتشر نخواهد شد.</span>
+                                                        <span
+                                                                class="required-field-message">بخش‌های موردنیاز علامت‌گذاری شده‌اند <span
+                                                                class="required">*</span></span></p>
                                                     <div class="row">
                                                         <div class="col-lg-6 col-sm-6">
                                                             <div class="form-group">
@@ -886,6 +830,7 @@
                                                                 <label>ایمیل شما <span>*</span></label>
                                                                 <input type="email" name="email" class="form-control"
                                                                        placeholder="ایمیل شما" required="">
+
                                                             </div>
                                                         </div>
 
@@ -909,17 +854,17 @@
                                                     <p class="comment-form-cookies-consent"><input
                                                             id="wp-comment-cookies-consent"
                                                             name="wp-comment-cookies-consent" type="checkbox"
-                                                            value="yes"> <label for="wp-comment-cookies-consent">ذخیره
-                                                        نام، ایمیل و وبسایت من در مرورگر برای زمانی که دوباره دیدگاهی
-                                                        می‌نویسم.</label></p>
-                                                    <p class="form-submit"><input name="submit" type="submit"
-                                                                                  id="submit" class="submit"
-                                                                                  value="ارسال نظر"> <input
-                                                            type="hidden" name="comment_post_ID" value="15682"
-                                                            id="comment_post_ID">
-                                                        <input type="hidden" name="comment_parent" id="comment_parent"
-                                                               value="0">
-                                                    </p></form>
+                                                            value="yes">
+                                                        <label for="wp-comment-cookies-consent">ذخیره نام، ایمیل و
+                                                            وبسایت من
+                                                            در مرورگر برای زمانی که دوباره دیدگاهی می‌نویسم.</label></p>
+                                                    <a href="#comment_list_section" class="form-submit"><input name="submit" type="submit"
+                                                                                  id="submit"
+                                                                                  class="submit" value="ارسال نظر">
+                                                        <input
+                                                                type="hidden" name="comment_post_ID" value="15657"
+                                                                id="comment_post_ID">
+                                                    </a></form>
                                             </div><!-- #respond -->
 
                                         </div>
@@ -927,9 +872,22 @@
 
                                     </div>
                                 </div>
-                            {% endif %}
 
-                        </div>
+
+                            </div>
+                        {% else %}
+                            <div class="comments-wrap">
+
+
+                                <!-- End Comment -->
+                                <div class="comment-title">
+                                    <h3 class="title">نظر </h3>
+                                </div>
+
+                                ارسال نظر در مورد این پست بسته شده است.
+
+                            </div>
+                        {% endif %}
 
 
                     </div>

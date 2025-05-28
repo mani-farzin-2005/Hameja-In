@@ -41,7 +41,9 @@
 
 
     <meta charset="UTF-8">
-    <title>TITLE OF THIS PAGE(DYNAMIC)</title>
+    {% block title %}
+    
+    {% endblock %}
 
     <link href="//www.google-analytics.com" rel="dns-prefetch">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -244,7 +246,7 @@
             <div class="col-lg-7 col-md-6">
                 <div class="top-head-left">
                     <div class="top-contact">
-                        <h3>پشتیبانی: <a href="">{{ contact_us.phone_number}}</a></h3>
+                        <h3>پشتیبانی: <a href="">{{ contact_us.phone_number }}</a></h3>
                     </div>
                 </div>
             </div>
@@ -394,7 +396,7 @@
 
                         <div class="nav-side-item">
                             <div class="get-btn">
-                                <a href="{% url 'website:contact-us'%}"
+                                <a href="{% url 'website:contact-us' %}"
                                    class="default-btn btn-bg-two border-radius-50">تماس با ما <i
                                         class="bx bx-chevron-right"></i></a>
                             </div>
@@ -558,7 +560,7 @@
         <div class="copy-right-area">
             <div class="copy-right-text">
                 <p>
-                    کلیه حقوق برای سایت همه جا محفوظ می باشد </p>
+                    {{website.copy_right}} </p>
             </div>
         </div>
     </div>
@@ -682,10 +684,90 @@
       media="all">
 <link rel="stylesheet" id="classic-theme-styles-css" href="{% static 'css/classic-themes.min.css' %}" type="text/css"
       media="all">
-<script type="text/javascript" src="{% static 'css/comment-reply.min.js' %}" id="comment-reply-js" async="async"
-        data-wp-strategy="async"></script>
-<link rel="stylesheet" href="{% static 'admin/jquery.ui.datepicker.jalali/themes/base/jquery-ui.min.css' %}">
-		<script src="{% static 'admin/js/django_jalali.min.js' %}"></script>
+<script>
+    var is_replyment = false;
+    document.getElementById("commentform").addEventListener("submit", function (e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        fetch("", {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": "{{ csrf_token }}",
+            },
+            body: formData,
+        })
+            .then(response => response.json())
+            .then(data => {
 
+                if (data.refer) {
+                    x = document.getElementById(`comment-list-${data.refer}`);
+                    const avatar = '{% static "images/avatar.jpg" %}';
+                        const comment_new = `<li class="comment even thread-even depth-1" id="comment-499">
+                    <img src="${avatar}" alt="" class="img-circle" width="54" height="54">
+                    <h3>${data.name}</h3>
+                    <span>${data.time}</span>
+                    <p>${data.comment}</p>
+                    <small class="pull-right"> | <b>در انتظار تایید</b></small>
+                </li>`;
+                        x.insertAdjacentHTML('beforeend', comment_new);
+
+                } else {
+                    const comment_form = document.getElementById('form-title-for-comment');
+                    comment_form.innerText = `دیدگاه شما در مورد این مطلب`;
+                    var is_replyment = false;
+                    const no_comment = document.getElementById("no_comment");
+                    if (no_comment) {
+                        no_comment.remove();
+                        const comment_section = document.getElementById("comment-wraping");
+                        comment_section.insertAdjacentHTML('beforeend', '<ul id="comment_list_section" class="comment-list"></ul>');
+
+                        const y = document.getElementById("comment_list_section");
+                        const avatar = '{% static "images/avatar.jpg" %}';
+                        const comment_new = `<li class="comment even thread-even depth-1" id="comment-499">
+                    <img src="${avatar}" alt="" class="img-circle" width="54" height="54">
+                    <h3>${data.name}</h3>
+                    <span>${data.time}</span>
+                    <p>${data.comment}</p>
+                    <small class="pull-right"> | <b>در انتظار تایید</b></small>
+                </li>`;
+                        y.insertAdjacentHTML('beforeend', comment_new);
+                    } else {
+
+                        const x = document.getElementById('comment_list_section');
+                        const avatar = '{% static "images/avatar.jpg" %}';
+                        const y = `<li class="comment even thread-even depth-1" id="comment-499">
+                    <img src="${avatar}" alt="" class="img-circle" width="54" height="54">
+                    <h3>${data.name}</h3>
+                    <span>${data.time}</span>
+                    <p>${data.comment}</p>
+                    <small class="pull-right"> | <b>در انتظار تایید</b></small>
+                </li>`;
+                        x.insertAdjacentHTML('beforeend', y);
+
+                    }
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    });
+
+    function replyment_to_comments(name, id) {
+        const formm = document.getElementById("commentform");
+
+
+        const comment_form = document.getElementById('form-title-for-comment');
+        comment_form.innerText = `دیدگاه شما در مورد نظر ${name}`;
+        if (!is_replyment) {
+            formm.insertAdjacentHTML('afterbegin',
+                `<input type="hidden" id="refering-comment" name="refering-comment" value="${id}">`
+            );
+            is_replyment = true;
+        } else {
+            const el = document.getElementById('refering-comment');
+            el.setAttribute('value', id);
+
+        }
+    }
+
+</script>
 </body>
 </html>

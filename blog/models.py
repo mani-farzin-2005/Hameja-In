@@ -1,6 +1,7 @@
 from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 from django_ckeditor_5.fields import CKEditor5Field
 from django.utils import timezone
 import subprocess
@@ -51,6 +52,8 @@ class Post(models.Model):
     linkdin = models.URLField(null=True)
     twitter = models.URLField(null=True)
     facebook = models.URLField(null=True)
+    def get_absolute_url(self):
+        return reverse('website:post', args=[self.id])
 
     def __str__(self):
         return self.title
@@ -64,7 +67,7 @@ class Comment(models.Model):
     post = models.ForeignKey('Post', on_delete=models.CASCADE , related_name='comment_owner')
     display = models.BooleanField(default=False)
     time = models.DateTimeField(editable=False, null=True)
-    reply = models.ForeignKey('Comment', null=True, blank=True, on_delete=models.CASCADE)
+    reply = models.ForeignKey('Comment', null=True, blank=True, on_delete=models.CASCADE , related_name='repliments')
     is_reply = models.BooleanField(default=False,null=True)
 
     def __str__(self, *args, **kwargs):

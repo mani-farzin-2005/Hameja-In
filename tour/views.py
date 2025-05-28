@@ -1,5 +1,7 @@
 from django.core.paginator import Paginator
+from django.http import JsonResponse
 from django.shortcuts import render , get_object_or_404
+from jalali_date import datetime2jalali
 
 from website.models import *
 from blog.models import Post, Tags
@@ -30,7 +32,11 @@ def all_tour(request):
     abo = AboutUs.objects.get()
     bl = Post.objects.filter(status=True).order_by('-published_date')[:3]
     suggestions = Suggestion_pack.objects.all()
-    return render(request,'tour-suggestion.html',{'headers': heads, 'website': web, 'contact_us': contac, 'about_us': abo, 'blogs': bl,'suggestions':suggestions})
+    x =[]
+    for suggest in suggestions:
+        for tour in suggest.tours.all:
+            x.append(tour)
+    return render(request,'tour-suggestion.html',{'alltour':x,'headers': heads, 'website': web, 'contact_us': contac, 'about_us': abo, 'blogs': bl,'suggestions':suggestions})
 
 def Package(request, id):
     from django.shortcuts import render, get_object_or_404
@@ -106,17 +112,34 @@ def single(request , id):
     sametour = Tour.objects.filter(tags__in=tour.tags.all()).exclude(id=tour.id).distinct()
     ta = Tagss.objects.all()
     comments = Comment.objects.filter(tour=tour,display=True,is_reply=False)
+    print(comments.count())
     if request.method=='POST':
         name = request.POST.get('author')
         email = request.POST.get('email')
         websit = request.POST.get('name')
         comment = request.POST.get('comment')
         refering_comment = request.POST.get('refering-comment')
-        if refering_comment == None:
-            x = Comment.objects.create(name=name, email=email, website=websit, text=comment, tour_id=id)
+        if refering_comment==None:
+            x = Comment.objects.create(name=name,email=email,website=websit,text=comment ,tour_id=id)
             x.save()
+            return JsonResponse({
+                "id":x.id,
+                "name": x.name,
+                "email": x.email,
+                "website": x.website,
+                "comment": x.text,
+                "time": datetime2jalali(x.time).strftime('%Y/%m/%d')
+            })
         else:
-            x = Comment.objects.create(name=name, email=email, website=websit, text=comment, tour_id=id,
-                                       reply_id=refering_comment)
+            x = Comment.objects.create(name=name, email=email, website=websit, text=comment, tour_id=id,reply_id=refering_comment)
             x.save()
+            return JsonResponse({
+                "id":x.id,
+                "name": x.name,
+                "email": x.email,
+                "website": x.website,
+                "comment": x.text,
+                "time": datetime2jalali(x.time).strftime('%Y/%m/%d'),
+                "refer":x.reply_id
+            })
     return render(request, 'tour-single.html', {'tour':tour,'headers': heads, 'website': web, 'contact_us': contac, 'about_us': abo, 'blogs': bl,'sametour':sametour,'tour_tags':ta , 'comments':comments})

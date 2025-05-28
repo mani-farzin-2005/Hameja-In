@@ -44,11 +44,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles', 'jalali_date','solo',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
     'website',
     'blog', 'hotel', 'tour',
-    'django_ckeditor_5'
+    'django_ckeditor_5','robots'
 ]
-
+SITE_ID = 1
 
 
 MIDDLEWARE = [

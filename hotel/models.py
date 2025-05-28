@@ -1,3 +1,4 @@
+from django.urls import reverse
 from django.utils import timezone
 
 from django.db import models
@@ -35,6 +36,9 @@ class Hotel(models.Model):
     price = models.PositiveIntegerField(default=100000)
     city = models.CharField(max_length=100 , null=True)
     description = models.TextField(max_length=150 , null=True)
+    last_update = models.DateTimeField(editable=False,default=timezone.now())
+    def get_absolute_url(self):
+        return reverse('hotels:single', args=[self.id])
 
     def __str__(self):
         return self.name
@@ -42,6 +46,7 @@ class Hotel(models.Model):
     def save(self, *args, **kwargs):
         self.service_low = self.service
         self.service_medium = self.service
+        self.last_update = timezone.now()
         super().save(*args, **kwargs)
 
 
@@ -61,7 +66,7 @@ class Comment(models.Model):
     hotel = models.ForeignKey('Hotel', on_delete=models.CASCADE)
     display = models.BooleanField(default=False)
     time = models.DateTimeField(editable=False, null=True)
-    reply = models.ForeignKey('Comment', null=True, blank=True, on_delete=models.CASCADE)
+    reply = models.ForeignKey('Comment', null=True, blank=True, on_delete=models.CASCADE,related_name='repliments')
     is_reply = models.BooleanField(default=False,editable=False,null=True)
 
     def __str__(self, *args, **kwargs):

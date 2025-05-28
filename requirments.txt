@@ -14,6 +14,7 @@ django-jalali-date==2.0.0
 django-js-asset==3.1.2
 django-modelcluster==6.4
 django-permissionedforms==0.1
+django-robots==6.1
 django-solo==2.4.0
 django-stubs-ext==5.2.0
 django-summernote==0.8.20.0

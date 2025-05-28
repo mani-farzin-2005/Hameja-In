@@ -1,5 +1,6 @@
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.urls import reverse
 from django.utils import timezone
 from django_ckeditor_5.fields import CKEditor5Field
 
@@ -17,10 +18,15 @@ class TourGroup(models.Model):
     title = models.CharField(max_length=100)
     content = CKEditor5Field('Text', config_name='extends')
     tags = models.ManyToManyField(Tagss, blank=True)
+    last_update=models.DateTimeField(default=timezone.now(),editable=False)
+    def get_absolute_url(self):
+        return reverse('tour:package', args=[self.id])
 
     def __str__(self):
         return self.title
-
+    def save(self, *args,**kwargs):
+        self.last_update = timezone.now()
+        super().save(*args,**kwargs)
 
 class Document(models.Model):
     name = models.CharField(max_length=100)
@@ -59,6 +65,8 @@ class Tour(models.Model):
 
     def __str__(self):
         return self.name
+    def get_absolute_url(self):
+        return reverse('tour:tour', args=[self.id])
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -89,16 +97,16 @@ class Comment(models.Model):
     tour = models.ForeignKey('Tour', on_delete=models.CASCADE)
     display = models.BooleanField(default=False)
     time = models.DateTimeField(editable=False, null=True)
-    reply = models.ForeignKey('Comment', null=True, blank=True, on_delete=models.CASCADE)
-    is_reply = models.BooleanField(null=True,editable=False,default=False)
+    reply = models.ForeignKey('Comment', null=True, blank=True, on_delete=models.CASCADE , related_name='repliments')
+    is_reply = models.BooleanField(null=True,default=False)
 
     def __str__(self, *args, **kwargs):
         return f'comment,{self.tour}'
 
     def save(self, *args, **kwargs):
         if not self.reply:
-            self.is_reply =True
-        else: self.is_reply =False
+            self.is_reply =False
+        else: self.is_reply =True
         self.time = timezone.now()
         super().save(*args, **kwargs)
 

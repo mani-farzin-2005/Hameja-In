@@ -1,5 +1,9 @@
 from django.core.paginator import Paginator
+from django.http import JsonResponse
 from django.shortcuts import render , get_object_or_404
+from django.views.decorators.csrf import csrf_exempt
+from jalali_date import datetime2jalali
+
 from .models import *
 from blog.models import *
 from tour.models import TourGroup, Tour, Tagss
@@ -86,7 +90,6 @@ def tag(request,tag_name):
     page_obj = paginator.get_page(page_number)
     return render(request,'blog-home.html' , {'posts':page_obj,'headers': heads, 'website': web, 'contact_us': contac, 'about_us': abo, 'blogs': bl , 'blog_count':blog_count,'tags':tags})
 
-
 def post(request,id):
     possst = get_object_or_404(Post,id=id)
     possst.views+=1
@@ -107,9 +110,26 @@ def post(request,id):
         if refering_comment==None:
             x = Comment.objects.create(name=name,email=email,website=websit,text=comment ,post_id=id)
             x.save()
+            return JsonResponse({
+                "id":x.id,
+                "name": x.name,
+                "email": x.email,
+                "website": x.website,
+                "comment": x.text,
+                "time": datetime2jalali(x.time).strftime('%Y/%m/%d')
+            })
         else:
             x = Comment.objects.create(name=name, email=email, website=websit, text=comment, post_id=id,reply_id=refering_comment)
             x.save()
+            return JsonResponse({
+                "id":x.id,
+                "name": x.name,
+                "email": x.email,
+                "website": x.website,
+                "comment": x.text,
+                "time": datetime2jalali(x.time).strftime('%Y/%m/%d'),
+                "refer":x.reply_id
+            })
 
     comments =Comment.objects.filter(post=possst,is_reply=False,display=True)
     comments_number = comments.count()

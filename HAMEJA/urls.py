@@ -19,8 +19,20 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from website.views import p404
+from django.contrib import sitemaps
+from django.contrib.sitemaps.views import sitemap
+from website.sitemaps import StaticViewSitemap,PostViewSiteMap
+from hotel.sitemaps import HotelViewSitemaps
+from tour.sitemaps import TourViewSitemap,PackageTourViewsSitemap,SingleTourViewSiteMap
 
-handler404 = p404  #
+
+sitemaps_dict ={
+    'static':StaticViewSitemap,'posts':PostViewSiteMap,'hotels':HotelViewSitemaps,'tour-suggestions':TourViewSitemap,
+    'packages':PackageTourViewsSitemap,'tours':SingleTourViewSiteMap
+}
+
+handler404 = p404
+
 urlpatterns = [
                   path('admin/', admin.site.urls),
                   path("ckeditor5/", include('django_ckeditor_5.urls')),
@@ -28,5 +40,9 @@ urlpatterns = [
                   path("category/blog/" , include('blog.urls')),
                   path("tours/" , include('tour.urls')),
                   path("hotel/" , include('hotel.urls')),
+                  path("robots.txt", include("robots.urls")),
+                  path('sitemap.xml', sitemap, {'sitemaps': sitemaps_dict}, name='sitemap'),
+
+
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

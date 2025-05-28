@@ -1,6 +1,8 @@
 {% extends 'base.html' %} {% load jalali_tags %}
 {% load static %}
-
+{% block title %}
+<title>در باره ی ما</title>
+{% endblock %}
 <!-- informations starts -->
 <!-- Inner Banner -->
 {% block content %}
@@ -18,7 +20,7 @@
             </ul>
 
             <script type="application/ld+json">{
-                "@context": "https:\/\/schema.org",
+                "@context": "https://schema.org",
                 "@type": "BreadcrumbList",
                 "name": "Breadcrumb",
                 "itemListElement": [

@@ -1,6 +1,9 @@
 {% extends 'base.html' %} {% load jalali_tags %}
 {% load static %}
 {% load customtag %}
+{% block title %}
+<title>هتل ها</title>
+{% endblock %}
 {% block content %}
 
 
@@ -18,7 +21,7 @@
                     </li>
                 </ul>
                 <script type="application/ld+json">{
-                "@context": "https:\/\/schema.org",
+                "@context": "https://schema.org",
                 "@type": "BreadcrumbList",
                 "name": "Breadcrumb",
                 "itemListElement": [

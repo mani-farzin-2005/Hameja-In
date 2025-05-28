@@ -27,7 +27,7 @@ class BookInline(admin.TabularInline):  # Or use `StackedInline` for a different
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
     list_display = ( 'name' , 'email' , 'website')
-    fields = ('name' , 'email' , 'website' , 'text', 'tour' , 'display')
+    fields = ('name' , 'email' , 'website' , 'text', 'tour' , 'display', 'is_reply' , 'reply')
 
 class TourGroupForm(forms.ModelForm):
     class Meta:
